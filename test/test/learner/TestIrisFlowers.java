@@ -15,6 +15,7 @@ import learner.Experience;
 import learner.Learner;
 import learner.features.ContinuousFeature;
 import learner.features.Feature;
+import learner.utils.Pair;
 
 /**
  * Main class to train and test a Learner.
@@ -60,7 +61,8 @@ public class TestIrisFlowers {
 			// test Learner's outcome classification
 			for (int j = numTraining; j < rows.size(); j++) {
 				Object actual = getOutcome(rows.get(j));
-				Object expected = learner.getClassification(getFeatures(rows.get(j)), MIN_CONFIDENCE);
+				Pair<Object, Double> classification = learner.getClassification(getFeatures(rows.get(j)), MIN_CONFIDENCE);
+				Object expected = classification.getFirst();
 				if (expected == null) unknown++;
 				else if (expected.equals(actual)) right++;
 				else wrong++;

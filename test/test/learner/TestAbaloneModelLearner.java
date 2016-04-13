@@ -1,29 +1,27 @@
 package test.learner;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import learner.Experience;
-import learner.Learner;
 import learner.features.ContinuousFeature;
 import learner.features.Feature;
 import learner.features.NominalFeature;
-import learner.utils.Pair;
+import ml.Instance;
+import ml.MlUtils;
+import ml.ModelLearner;
 
 /**
  * Main class to train and test a Learner.
  * 
  * @author woodser
  */
-public class TestAbalone {
+public class TestAbaloneModelLearner {
 	
 	private static final double PERCENT_TRAINING = .75;
 	private static final double MIN_CONFIDENCE = .15;
@@ -39,7 +37,7 @@ public class TestAbalone {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// read training / test data
-		List<List<String>> rows = importCsv(new File("resources/abalone.csv"));
+		List<List<String>> rows = MlUtils.importCsv(new File("resources/abalone.csv"));
 		
 		// determine number of training instances vs test instances
 		int numTraining = (int) Math.round(PERCENT_TRAINING * rows.size());
@@ -54,18 +52,19 @@ public class TestAbalone {
 			// randomize training and test set
 			Collections.shuffle(rows, new Random(System.nanoTime()));
 			
-			// train a Learner with training instances
-			Learner learner = new Learner();
-			for (int j = 0; j < numTraining; j++) {
-				learner.learn(getExperience(rows.get(j)));
-			}
+			// train a model with training instances
+      ModelLearner model = new ModelLearner();
+      for (int j = 0; j < numTraining; j++) {
+        model.addTrainingInstance(ModelLearner.getInstance(getExperience(rows.get(j))));
+      }
 			
 			// test Learner's outcome classification
 			for (int j = numTraining; j < rows.size(); j++) {
 				Integer actual = getOutcome(rows.get(j));
 				long start = System.currentTimeMillis();
-				Pair<Object, Double> classification = learner.getClassification(getFeatures(rows.get(j)), MIN_CONFIDENCE);
-				Integer expected = (Integer) classification.getFirst();
+				Instance instance = ModelLearner.getInstance(new Experience(getFeatures(rows.get(j)), null));
+				model.classify(instance);
+				Integer expected = (Integer) (instance.getProbability() >= MIN_CONFIDENCE ? instance.getClassification() : null);
 				time += System.currentTimeMillis() - start;
 				if (expected == null) unknown++;
 				else if (Math.abs(actual - expected) <= RING_LENIENCY) right++;
@@ -80,25 +79,6 @@ public class TestAbalone {
 		System.out.println("Done in " + time + " ms");
 		System.out.println("Right: " + right + ", wrong: " + wrong + ", unknown: " + unknown);
 		System.out.println("Accuracy: " + accuracy + ", precision: " + precision + ", recall: " + recall);
-	}
-	
-	/**
-	 * Imports a CSV file.
-	 * 
-	 * @param file points to the CSV file
-	 * @return List<List<String>> are the rows and values of the CSV file
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	private static List<List<String>> importCsv(File file) throws FileNotFoundException, IOException {
-		List<List<String>> rows = new ArrayList<List<String>>();
-		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		    	rows.add(Arrays.asList(line.split(",")));
-		    }
-		}
-		return rows;
 	}
 	
 	/**

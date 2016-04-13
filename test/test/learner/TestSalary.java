@@ -16,6 +16,7 @@ import learner.Learner;
 import learner.features.ContinuousFeature;
 import learner.features.Feature;
 import learner.features.NominalFeature;
+import learner.utils.Pair;
 
 /**
  * Main class to train and test a Learner.
@@ -71,7 +72,8 @@ public class TestSalary {
 			for (int j = numTraining; j < rows.size(); j++) {
 			  // get results
 				Object actual = getOutcome(rows.get(j));
-				Object expected = learner.getClassification(getFeatures(rows.get(j)), MIN_CONFIDENCE);
+				Pair<Object, Double> classification = learner.getClassification(getFeatures(rows.get(j)), MIN_CONFIDENCE);
+				Object expected = classification.getFirst();
 				
 				// measure results
 				if (expected == null) unknown++;

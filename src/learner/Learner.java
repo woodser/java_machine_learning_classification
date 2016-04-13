@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import learner.features.Feature;
+import learner.utils.LearnerUtils;
+import learner.utils.Pair;
 
 /**
  * Entity that learns from experience.
@@ -142,25 +144,42 @@ public class Learner {
 	  return LearnerUtils.aggregateDistributions(sizeDistributions);
 	}
 	
-	/**
-	 * Gets the most probable outcome classification for the given features based on past experiences.
-	 * 
-	 * @param features are the features to get an outcome classification for
-	 * @param minConfidence is the minimum confidence the distribution must have to return a classification
-	 * @return Object is the outcome if the confidence exceeds the threshold
-	 */
-	public Object getClassification(List<Feature> features, double minConfidence) {
-	  if (experiences.isEmpty()) throw new RuntimeException("Learner has no experience");
-		Map<Object, Double> distribution = getDistribution(features);
-		System.out.println(distribution);
-		double confidence = LearnerUtils.getConfidence(distribution);
-		if (confidence == 0 || confidence < minConfidence) return null;
-		Object best = null;
-		for (Object outcome : distribution.keySet()) {
-		  if (best == null || distribution.get(outcome) > distribution.get(best)) best = outcome;
-		}
-		return best;
-	}
+  /**
+   * Gets the most probable outcome classification for the given features based on past experiences.
+   * 
+   * @param features are the features to get an outcome classification for
+   * @param minConfidence is the minimum confidence the distribution must have to return a classification
+   * @return Pair<Object, Double> is the outcome and its confidence if the confidence exceeds the threshold
+   */
+  public Pair<Object, Double> getClassification(List<Feature> features, double minConfidence) {
+    if (experiences.isEmpty()) throw new RuntimeException("Learner has no experience");
+    Map<Object, Double> distribution = getDistribution(features);
+    double confidence = LearnerUtils.getConfidence(distribution);
+    if (confidence == 0 || confidence < minConfidence) return new Pair<Object, Double>(null, null);
+    Object best = null;
+    for (Object outcome : distribution.keySet()) {
+      if (best == null || distribution.get(outcome) > distribution.get(best)) best = outcome;
+    }
+    return new Pair<Object, Double>(best, confidence);
+  }
+  
+  /**
+   * Gets the most probable outcome classification for the given distribution.
+   * 
+   * @param distribution is a classification distribution previously calculated
+   * @param minConfidence is the minimum confidence the distribution must have to return a classification
+   * @return Pair<Object, Double> is the outcome and its confidence if the confidence exceeds the threshold
+   */
+  public Pair<Object, Double> getClassification(Map<Object, Double> distribution, double minConfidence) {
+    if (experiences.isEmpty()) throw new RuntimeException("Learner has no experience");
+    double confidence = LearnerUtils.getConfidence(distribution);
+    if (confidence == 0 || confidence < minConfidence) return new Pair<Object, Double>(null, null);
+    Object best = null;
+    for (Object outcome : distribution.keySet()) {
+      if (best == null || distribution.get(outcome) > distribution.get(best)) best = outcome;
+    }
+    return new Pair<Object, Double>(best, confidence);
+  }
   
   // ----------------------------- PRIVATE HELPERS ----------------------------
   

@@ -23,10 +23,10 @@ public class TestLogicOperators extends Learner {
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), Outcome.A);
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), Outcome.A);
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), Outcome.B);
-    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("false")}), 0));
-    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), 0));
-    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), 0));
-    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), 0));
+    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("false")}), 0).getFirst());
+    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), 0).getFirst());
+    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), 0).getFirst());
+    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), 0).getFirst());
   }
   
   @Test
@@ -38,10 +38,10 @@ public class TestLogicOperators extends Learner {
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), Outcome.A);
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), Outcome.A);
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), Outcome.B);
-    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("false")}), 0));
-    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), 0));
-    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), 0));
-    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), 0));
+    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("false")}), 0).getFirst());
+    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), 0).getFirst());
+    assertEquals(Outcome.A, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), 0).getFirst());
+    assertEquals(Outcome.B, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), 0).getFirst());
   }
   
   @Test
@@ -53,10 +53,10 @@ public class TestLogicOperators extends Learner {
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), false);
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), false);
     learner.learn(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), true);
-    assertEquals(false, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("false")}), 0));
-    assertEquals(false, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), 0));
-    assertEquals(false, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), 0));
-    assertEquals(true, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), 0));
+    assertEquals(false, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("false")}), 0).getFirst());
+    assertEquals(false, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("false")}), 0).getFirst());
+    assertEquals(false, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("false"), new NominalFeature("true")}), 0).getFirst());
+    assertEquals(true, learner.getClassification(Arrays.asList(new NominalFeature[] {new NominalFeature("true"), new NominalFeature("true")}), 0).getFirst());
   }
   
   private enum Outcome {

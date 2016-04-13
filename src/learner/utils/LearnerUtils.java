@@ -1,4 +1,4 @@
-package learner;
+package learner.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
