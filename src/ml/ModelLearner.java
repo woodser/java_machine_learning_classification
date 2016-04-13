@@ -15,7 +15,7 @@ import learner.features.NominalFeature;
 import learner.utils.Pair;
 
 /**
- * Implements a model backed by Eric's learner.
+ * Implements a model backed by a Learner.
  * 
  * @author woodser
  */
