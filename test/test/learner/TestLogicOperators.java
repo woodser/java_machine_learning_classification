@@ -14,7 +14,7 @@ import learner.features.NominalFeature;
  * 
  * @author woodser
  */
-public class TestLogicOperators extends Learner {
+public class TestLogicOperators {
 
   @Test
   public void testSimpleXOR() {

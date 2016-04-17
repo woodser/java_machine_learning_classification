@@ -200,15 +200,6 @@ public class Learner implements Serializable {
       Set<Set<Integer>> powerSet = powerSet(indices);
       powerSet.remove(new HashSet<Integer>());  // remove empty set
       
-      // TODO: better way to optimize
-      Set<Set<Integer>> toRemove = new HashSet<Set<Integer>>();
-      int count = 0;
-      for (Set<Integer> set : powerSet) {
-        if (count++ % 25 == 0) continue;
-        toRemove.add(set);
-      }
-      powerSet.removeAll(toRemove);
-      
       combinationCache.put(numInputs, powerSet);
     }
     return combinationCache.get(numInputs);
