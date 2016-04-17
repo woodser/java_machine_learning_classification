@@ -31,7 +31,7 @@ public class ModelLearner implements Model {
 
   @Override
   public void load(byte[] bytes) {
-    this.learner = SerializationUtils.deserialize(bytes);
+    this.learner = (Learner) SerializationUtils.deserialize(bytes);
   }
 
   @Override
