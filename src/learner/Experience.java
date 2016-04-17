@@ -1,5 +1,6 @@
 package learner;
 
+import java.io.Serializable;
 import java.util.List;
 
 import learner.features.Feature;
@@ -9,8 +10,9 @@ import learner.features.Feature;
  * 
  * @author woodser
  */
-public class Experience {
+public class Experience implements Serializable {
 
+  private static final long serialVersionUID = -1794404088095011912L;
   private List<Feature> features;
   private Object outcome;
   

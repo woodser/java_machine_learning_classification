@@ -14,6 +14,8 @@ import learner.features.Feature;
 import learner.features.NominalFeature;
 import learner.utils.Pair;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 /**
  * Implements a model backed by a Learner.
  * 
@@ -29,12 +31,12 @@ public class ModelLearner implements Model {
 
   @Override
   public void load(byte[] bytes) {
-    throw new RuntimeException("Not yet implemented.");
+    this.learner = SerializationUtils.deserialize(bytes);
   }
 
   @Override
   public byte[] export() {
-    throw new RuntimeException("Not yet implemented.");
+    return SerializationUtils.serialize(learner);
   }
 
   @Override
@@ -53,18 +55,20 @@ public class ModelLearner implements Model {
   }
 
   @Override
-  public void classify(Instance instance) {
+  public Instance classify(Instance instance) {
     Experience experience = getExperience(instance);
     Map<Object, Double> distribution = learner.getDistribution(experience.getFeatures());
     instance.setDistribution(distribution);
     Pair<Object, Double> classification = learner.getClassification(distribution, 0);
     instance.setClassification(classification.getFirst());
     instance.setProbability(classification.getSecond());
+    return instance;
   }
 
   @Override
-  public void classify(Collection<Instance> instances) {
+  public Collection<Instance> classify(Collection<Instance> instances) {
     for (Instance instance : instances) classify(instance);
+    return instances;
   }
   
   /**

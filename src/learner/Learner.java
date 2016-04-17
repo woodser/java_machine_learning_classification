@@ -1,5 +1,6 @@
 package learner;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,15 +15,16 @@ import learner.utils.Pair;
 /**
  * Entity that learns from experience.
  * 
- * TODO: source control
  * TODO: ability to compare feature based on range supplied by training set
  * TODO: discard index combinations by informativeness
  * TODO: how to handle e.g. 52 features?
  * 
  * @author woodser
  */
-public class Learner {
+public class Learner implements Serializable {
   
+  private static final long serialVersionUID = 1484512006456050081L;
+
   // the learner's experiences to learn from
   private List<Experience> experiences;
   

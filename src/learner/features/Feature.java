@@ -1,6 +1,8 @@
 package learner.features;
 
-public interface Feature {
+import java.io.Serializable;
+
+public interface Feature extends Serializable {
 
 	public double compare(Feature feature);
 }

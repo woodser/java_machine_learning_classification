@@ -7,7 +7,8 @@ package learner.features;
  */
 public class ContinuousFeature implements Feature {
 	
-	private double val;
+  private static final long serialVersionUID = 3611894973866608365L;
+  private double val;
 
 	public ContinuousFeature(double val) {
 		super();

@@ -23,6 +23,11 @@ public class Main {
     model.addTrainingInstances(instances);
     model.train();
     
+    // test import/export
+    long start = System.currentTimeMillis();
+    model.load(model.export());
+    System.out.println("Time to export/load: " + (System.currentTimeMillis() - start));
+    
     // test model performance
     int right = 0;
     int wrong = 0;
@@ -33,6 +38,6 @@ public class Main {
       if (test.getClassification().equals(instance.getClassification())) right++;
       else wrong++;
     }
-    System.out.println((double) right / (double) (right + wrong));
+    System.out.println("Final accuracy: " + (double) right / (double) (right + wrong));
   }
 }

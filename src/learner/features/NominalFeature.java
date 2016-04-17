@@ -7,7 +7,8 @@ package learner.features;
  */
 public class NominalFeature implements Feature {
 	
-	private String val;
+  private static final long serialVersionUID = 3854610828682035397L;
+  private String val;
 
 	public NominalFeature(String val) {
 		super();
