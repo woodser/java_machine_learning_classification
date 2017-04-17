@@ -1,2 +1,2 @@
-# logistic_regression
-Java-based logistic regression machine learning algorithm
+# machine_learning_classification
+Java machine learning classifcation algorithm
